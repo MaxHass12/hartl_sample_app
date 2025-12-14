@@ -7,7 +7,7 @@ Rails.application.configure do
   config.enable_reloading = true
 
   # Do not eager load code on boot.
-  config.eager_load = false
+  config.eager_load = Rails.env.production?
 
   # Show full error reports.
   config.consider_all_requests_local = true
