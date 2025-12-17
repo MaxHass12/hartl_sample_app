@@ -1,6 +1,5 @@
 <% provide(:title, "Log In") %>
 <h1>Log In</h1>
-
 <div class="row">
   <div class="col-md-6">
     <%= form_with url: login_path, scope: :session do |f| %>
@@ -11,6 +10,10 @@
       <div class="mb-3">
         <%= f.label :password, class: "form-label" %>
         <%= f.password_field :password, class: "form-control" %>
+      </div>
+      <div class="mb-3 form-check">
+        <%= f.check_box :remember_me, class: "form-check-input" %>
+        <%= f.label :remember_me, "Remember me", class: "form-check-label" %>
       </div>
       <%= f.submit "Log In", class: "btn btn-primary" %>
       <p class="mt-2">New User? <%= link_to 'Sign Up Now', signup_path %></p>

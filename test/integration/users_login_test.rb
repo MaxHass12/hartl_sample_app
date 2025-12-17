@@ -49,6 +49,10 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_not is_logged_in?
     assert_not flash.empty?
+    # simulate a user clicking logout in second window
+    delete logout_path
+    follow_redirect!
+    assert_not is_logged_in?
   end
 
   test "failed login in valid email / invalid password" do
@@ -66,5 +70,18 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
 
     get root_path
     assert flash.empty?
+  end
+
+  test "login with remembering" do
+    log_in_as(@user, remember_me: '1')
+    assert_not cookies[:remember_token].blank?
+  end
+
+  test "login without remembering" do
+    # log in to set the cookies
+    log_in_as(@user, remember_me: '1')
+    # log in again and verify that the cookie is deleted
+    log_in_as(@user, remember_me: '0')
+    assert cookies[:remember_token].blank?
   end
 end
